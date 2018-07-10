@@ -5,10 +5,6 @@ import com.solstice.stockticker.service.QuoteLoadingService;
 import com.solstice.stockticker.service.QuoteService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-
 @RestController
 public class StockDataController {
 
@@ -29,8 +25,16 @@ public class StockDataController {
 
   @GetMapping("/{ticker}/{date}")
   @ResponseBody
-  public StockSummary get(@PathVariable("ticker") String ticker,
-                          @PathVariable("date")String date){
-    return quoteService.findSummary(ticker, date);
+  public StockSummary dailySummary(@PathVariable("ticker") String ticker,
+                                   @PathVariable("date")String date){
+    return quoteService.findSummaryByDate(ticker, date);
   }
+
+  @GetMapping("/month/{ticker}/{date}")
+  @ResponseBody
+  public StockSummary monthSummary(@PathVariable("ticker") String ticker,
+                          @PathVariable("date")String date){
+    return quoteService.findSummaryByMonth(ticker, date);
+  }
+
 }
