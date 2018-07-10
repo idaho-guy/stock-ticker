@@ -14,4 +14,7 @@ public interface QuoteRepository extends CrudRepository<Quote,Long> {
       "where symbol = :ticker and truncate(date) = parsedatetime(:date, 'yyyy-MM-dd')")
   StockSummary findSummary(@Param("ticker") String ticker, @Param("date") String date);
 
+  @Query("select count(*) from Quote q ")
+  Long quoteCount();
+
 }

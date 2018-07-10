@@ -13,6 +13,9 @@ public class StockSummary {
     this.totalVolume = totalVolume;
   }
 
+  public StockSummary() {
+  }
+
   public BigDecimal getHighPrice() {
     return highPrice;
   }

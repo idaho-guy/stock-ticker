@@ -3,6 +3,7 @@ package com.solstice.stockticker.service;
 import com.google.gson.Gson;
 import com.solstice.stockticker.model.Quote;
 import com.solstice.stockticker.repository.QuoteRepository;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStreamReader;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @Service
+@Primary
 public class ClassPathQuoteLoadingSystem implements QuoteLoadingService{
   private QuoteRepository quoteRepository;
 
