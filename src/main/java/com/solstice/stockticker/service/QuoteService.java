@@ -2,6 +2,7 @@ package com.solstice.stockticker.service;
 
 import com.solstice.stockticker.controller.StockSummaryParams;
 import com.solstice.stockticker.dto.StockSummary;
+import com.solstice.stockticker.exception.NotFoundException;
 import com.solstice.stockticker.repository.QuoteRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,11 @@ public class QuoteService {
     if(possibleErrors.size() > 0){
       throw new ValidationException(possibleErrors.stream().map(e -> e.getMessage()).collect(Collectors.joining("\n")));
     }
-    return repository.findSummary(ticker, date);
+    StockSummary summary = repository.findSummary(ticker, date);
+    if(summary == null || summary.getTotalVolume() == null){
+      throw new NotFoundException(String.format("No information found for ticker:date %s:%s",ticker,date));
+    }
+    return summary;
   }
 
   public void verifyEmpty(){
