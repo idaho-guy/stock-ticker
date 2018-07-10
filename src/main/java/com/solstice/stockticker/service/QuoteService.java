@@ -33,6 +33,7 @@ public class QuoteService {
     if(summary == null || summary.getTotalVolume() == null){
       throw new NotFoundException(String.format("No information found for ticker:date %s:%s",ticker,date));
     }
+    summary.setClosingPrice(repository.findClosingPrice(ticker,date));
     return summary;
   }
 

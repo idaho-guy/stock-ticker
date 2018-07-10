@@ -6,6 +6,7 @@ public class StockSummary {
   private BigDecimal highPrice;
   private BigDecimal lowPrice;
   private Long totalVolume;
+  private BigDecimal closingPrice;
 
   public StockSummary(BigDecimal highPrice, BigDecimal lowPrice, Long totalVolume) {
     this.highPrice = highPrice;
@@ -26,5 +27,13 @@ public class StockSummary {
 
   public Long getTotalVolume() {
     return totalVolume;
+  }
+
+  public BigDecimal getClosingPrice() {
+    return closingPrice;
+  }
+
+  public void setClosingPrice(BigDecimal closingPrice) {
+    this.closingPrice = closingPrice;
   }
 }
