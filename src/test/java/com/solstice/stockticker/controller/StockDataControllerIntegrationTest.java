@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class StockDataControllerntegrationTest {
+public class StockDataControllerIntegrationTest {
 
   @Autowired
   private QuoteRepository quoteRepository;
@@ -39,11 +39,24 @@ public class StockDataControllerntegrationTest {
   public void testLoadAndGetGet() throws Exception{
     assertLoadData();
 
+    assertDailyData();
+    assertMonthlyData();
+  }
+
+  private void assertDailyData() throws URISyntaxException {
     ResponseEntity<StockSummaryDto> entity = restTemplate.getForEntity(new URI(String.format("http://localhost:%d/GOOG/2018-06-22", port)), StockSummaryDto.class);
     StockSummaryDto summary = entity.getBody();
     assertEquals(724223L, summary.getTotalVolume().longValue());
     assertEquals(new BigDecimal(1130.99).setScale(2,BigDecimal.ROUND_HALF_DOWN), summary.getHighPrice().setScale(2,BigDecimal.ROUND_HALF_DOWN));
     assertEquals(new BigDecimal(1120.01).setScale(2,BigDecimal.ROUND_HALF_DOWN), summary.getLowPrice().setScale(2).setScale(2,BigDecimal.ROUND_HALF_DOWN));
+  }
+
+  private void assertMonthlyData() throws URISyntaxException {
+    ResponseEntity<StockSummaryDto> entity = restTemplate.getForEntity(new URI(String.format("http://localhost:%d/month/GOOG/2018-06", port)), StockSummaryDto.class);
+    StockSummaryDto summary = entity.getBody();
+    assertEquals(2159363L, summary.getTotalVolume().longValue());
+    assertEquals(new BigDecimal(1130.99).setScale(2,BigDecimal.ROUND_HALF_DOWN), summary.getHighPrice().setScale(2,BigDecimal.ROUND_HALF_DOWN));
+    assertEquals(new BigDecimal(1120.00).setScale(2,BigDecimal.ROUND_HALF_DOWN), summary.getLowPrice().setScale(2).setScale(2,BigDecimal.ROUND_HALF_DOWN));
   }
 
   private void assertLoadData() throws URISyntaxException {
