@@ -1,6 +1,6 @@
 package com.solstice.stockticker.controller;
 
-import com.solstice.stockticker.dto.StockSummary;
+import com.solstice.stockticker.dto.StockSummaryDto;
 import com.solstice.stockticker.service.QuoteLoadingService;
 import com.solstice.stockticker.service.QuoteService;
 import org.springframework.web.bind.annotation.*;
@@ -25,15 +25,15 @@ public class StockDataController {
 
   @GetMapping("/{ticker}/{date}")
   @ResponseBody
-  public StockSummary dailySummary(@PathVariable("ticker") String ticker,
-                                   @PathVariable("date")String date){
+  public StockSummaryDto dailySummary(@PathVariable("ticker") String ticker,
+                                      @PathVariable("date")String date){
     return quoteService.findSummaryByDate(ticker, date);
   }
 
   @GetMapping("/month/{ticker}/{date}")
   @ResponseBody
-  public StockSummary monthSummary(@PathVariable("ticker") String ticker,
-                          @PathVariable("date")String date){
+  public StockSummaryDto monthSummary(@PathVariable("ticker") String ticker,
+                                      @PathVariable("date")String date){
     return quoteService.findSummaryByMonth(ticker, date);
   }
 

@@ -3,7 +3,7 @@ package com.solstice.stockticker.service;
 import com.solstice.stockticker.controller.StockSummaryDateParams;
 import com.solstice.stockticker.controller.StockSummaryMonthParams;
 import com.solstice.stockticker.controller.StockSummaryParams;
-import com.solstice.stockticker.dto.StockSummary;
+import com.solstice.stockticker.dto.StockSummaryDto;
 import com.solstice.stockticker.exception.NotFoundException;
 import com.solstice.stockticker.repository.QuoteRepository;
 import org.springframework.stereotype.Service;
@@ -30,17 +30,17 @@ public class QuoteService {
     validator = validatorFactory.getValidator();
   }
 
-  public StockSummary findSummaryByDate(String ticker, String date) {
+  public StockSummaryDto findSummaryByDate(String ticker, String date) {
     return getStockSummary(ticker, date, DATE_FORMAT,() -> new StockSummaryDateParams(ticker, date));
   }
 
-  public StockSummary findSummaryByMonth(String ticker, String month) {
+  public StockSummaryDto findSummaryByMonth(String ticker, String month) {
     return getStockSummary(ticker, month, MONTH_FORMAT,() -> new StockSummaryMonthParams(ticker, month));
   }
 
-  private StockSummary getStockSummary(String ticker, String month, String format, Supplier<StockSummaryParams> supplier) {
+  private StockSummaryDto getStockSummary(String ticker, String month, String format, Supplier<StockSummaryParams> supplier) {
     validateSummary(supplier);
-    StockSummary summary = repository.findSummaryByDate(ticker, month, format);
+    StockSummaryDto summary = repository.findSummaryByDate(ticker, month, format);
     if(summary == null || summary.getTotalVolume() == null){
       throw new NotFoundException(String.format("No information found for ticker:date %s:%s",ticker,month));
     }

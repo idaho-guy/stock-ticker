@@ -1,9 +1,6 @@
 package com.solstice.stockticker.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,10 +10,22 @@ public class Quote {
   @Id
   @GeneratedValue
   private long id;
-  private String symbol;
+
+  @ManyToOne
+  private Stock stock;
   private BigDecimal price;
   private Long volume;
   private Date date;
+
+  public Quote() {
+  }
+
+  public Quote(Stock stock, BigDecimal price, Long volume, Date date) {
+    this.stock = stock;
+    this.price = price;
+    this.volume = volume;
+    this.date = date;
+  }
 
   public long getId() {
     return id;
@@ -24,14 +33,6 @@ public class Quote {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-  public String getSymbol() {
-    return symbol;
-  }
-
-  public void setSymbol(String symbol) {
-    this.symbol = symbol;
   }
 
   public BigDecimal getPrice() {
@@ -56,5 +57,13 @@ public class Quote {
 
   public void setDate(Date date) {
     this.date = date;
+  }
+
+  public Stock getStock() {
+    return stock;
+  }
+
+  public void setStock(Stock stock) {
+    this.stock = stock;
   }
 }

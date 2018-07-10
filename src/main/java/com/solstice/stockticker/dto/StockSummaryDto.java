@@ -2,19 +2,19 @@ package com.solstice.stockticker.dto;
 
 import java.math.BigDecimal;
 
-public class StockSummary {
+public class StockSummaryDto {
   private BigDecimal highPrice;
   private BigDecimal lowPrice;
   private Long totalVolume;
   private BigDecimal closingPrice;
 
-  public StockSummary(BigDecimal highPrice, BigDecimal lowPrice, Long totalVolume) {
+  public StockSummaryDto(BigDecimal highPrice, BigDecimal lowPrice, Long totalVolume) {
     this.highPrice = highPrice;
     this.lowPrice = lowPrice;
     this.totalVolume = totalVolume;
   }
 
-  public StockSummary() {
+  public StockSummaryDto() {
   }
 
   public BigDecimal getHighPrice() {

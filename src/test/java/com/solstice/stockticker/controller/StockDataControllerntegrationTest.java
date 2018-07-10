@@ -1,6 +1,6 @@
 package com.solstice.stockticker.controller;
 
-import com.solstice.stockticker.dto.StockSummary;
+import com.solstice.stockticker.dto.StockSummaryDto;
 import com.solstice.stockticker.repository.QuoteRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,8 +39,8 @@ public class StockDataControllerntegrationTest {
   public void testLoadAndGetGet() throws Exception{
     assertLoadData();
 
-    ResponseEntity<StockSummary> entity = restTemplate.getForEntity(new URI(String.format("http://localhost:%d/GOOG/2018-06-22", port)), StockSummary.class);
-    StockSummary summary = entity.getBody();
+    ResponseEntity<StockSummaryDto> entity = restTemplate.getForEntity(new URI(String.format("http://localhost:%d/GOOG/2018-06-22", port)), StockSummaryDto.class);
+    StockSummaryDto summary = entity.getBody();
     assertEquals(724223L, summary.getTotalVolume().longValue());
     assertEquals(new BigDecimal(1130.99).setScale(2,BigDecimal.ROUND_HALF_DOWN), summary.getHighPrice().setScale(2,BigDecimal.ROUND_HALF_DOWN));
     assertEquals(new BigDecimal(1120.01).setScale(2,BigDecimal.ROUND_HALF_DOWN), summary.getLowPrice().setScale(2).setScale(2,BigDecimal.ROUND_HALF_DOWN));
